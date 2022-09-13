@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tus Tarjetas - Growing Capital Homebanking</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geostar+Fill&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="./imagenes/GrowingCapitalTransparent-logo.png">
+    <link rel="stylesheet" href="./styles/styles.css">
+
+</head>
+
+<body>
+
+    <div id="app">
+
+        <header class="bg-oscuro">
+
+
+            <div class="top-bar contenedor">
+                <div class="contenedor-nav-menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" @Click="abrirMenu()" class="icon icon-tabler icon-tabler-menu-2" id="open-menu-icon" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <line x1="4" y1="6" x2="20" y2="6" />
+                    <line x1="4" y1="12" x2="20" y2="12" />
+                    <line x1="4" y1="18" x2="20" y2="18" />
+                </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" @Click="cerrarMenu()" class="icon icon-tabler icon-tabler-square-x" id="close-menu-icon" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <rect x="4" y="4" width="16" height="16" rx="2" />
+                    <path d="M10 10l4 4m0 -4l-4 4" />
+                </svg>
+                    <nav class="navegacion" id="navegacion">
+                        <a href="../index.html" class="nav-link">Inicio</a>
+                        <a href="./accounts.html" class="nav-link">Cuentas</a>
+                        <a href="./posnet-payment.html" class="nav-link">Posnet</a>
+                        <a href="#" class="nav-link">Contacto</a>
+                        <a class="nav-link" id="nav-cerrar-sesion" @Click="aparecerLogout()">Cerrar Sesión</a>
+
+                    </nav>
+
+                </div>
+
+                <a href="../index.html" class="contenedor-logo">
+                    <img src="./imagenes/GrowingCapitalTransparent-logo.png" alt="growing-capital-logo" class="logo">
+                </a>
+
+                <a>
+                    <svg xmlns="http://www.w3.org/2000/svg" id="icono-iniciar-sesion" @Click="aparecerLogout()" class="icon icon-tabler icon-tabler-user-circle" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <circle cx="12" cy="12" r="9" />
+                    <circle cx="12" cy="10" r="3" />
+                    <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
+                </svg>
+                </a>
+
+            </div>
+
+
+
+
+
+        </header>
+
+        <main>
+
+
+
+            <div class="user-cards-container contenedor">
+
+                <h1>Tarjetas</h1>
+
+                <div v-if="cantidadTarjetasCreditoCliente < 3" class="contenedor-btn-crear-tarjeta ">
+                    <a class="btn-primario " href="./create-cards.html ">Crear Tarjeta</a>
+                </div>
+
+
+
+                <div class="contenedor-tarjetas ">
+                    <div v-for="card in cards " class="contenedor-card ">
+                        <div class="user-card " :id="card.color ">
+                            <div class="user-card-top ">
+                                <div class="card-type-icon ">
+                                    <p class="card-type ">{{card.type}}</p>
+                                    <img class="card-chip " src="./imagenes/chip.png " alt="chip ">
+
+                                </div>
+                                <div class="card-bank-logo ">
+                                    <p class="card-bank ">growing capital</p>
+                                    <img src="./imagenes/GrowingCapitalTransparent-logo.png " alt="growing-capital-logo " class="card-logo ">
+                                </div>
+                            </div>
+                            <div class="user-card-number ">
+                                <p class="card-number ">{{card.number}}</p>
+                            </div>
+
+                            <div class="user-card-footer ">
+                                <div class="user-card-footer-left ">
+                                    <div class="user-card-thruDate ">
+                                        <p class="user-card-thru ">Valid thru</p>
+                                        <p class="user-card-date ">{{accountDateFormat(card.thruDate)}}</p>
+                                    </div>
+
+                                    <p class="user-card-cardHolder ">{{card.cardHolder}}</p>
+                                </div>
+                                <div class="user-card-footer-right ">
+                                    <img src="./imagenes/visa-logo.png " alt="visa-logo " class="card-visa-logo ">
+                                    <p class="card-color ">{{card.color}}</p>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                        <div class="contenedor-btns-card ">
+                            <div v-if="card.type==='CREDITO' " class="card-btn-container ">
+                                <a class="card-btn " @Click.prevent="solicitudEliminarCard(card) ">Eliminar Tarjeta</a>
+                            </div>
+                            <div v-if="vencimientoTarjeta==='Vencida' " class="card-btn-container ">
+                                <a class="card-btn bgRed ">Tarjeta Vencida</a>
+
+                            </div>
+                            <div v-if="vencimientoTarjeta==='Próxima a vencer' " class=" card-btn-container ">
+                                <a class="card-btn bgOrange ">Tarjeta Próxima a vencer</a>
+
+                            </div>
+                            <div v-if="card.type==='DEBITO' " class="card-btn-container ">
+                                <a class="card-btn " @Click.prevent="solicitudVerCuenta(card)">Ver Movimientos</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+        </main>
+
+        <footer class="footer bg-oscuro ">
+
+            <div class="contenedor-footer contenedor ">
+                <a href="../index.html " class="contenedor-logo ">
+                    <img src="./imagenes/GrowingCapitalTransparent-logo.png " alt="growing-capital-logo " class="logo ">
+                </a>
+
+
+                <div class="footer-contenedor-redes ">
+                    <h4>Siguenos en nuestras Redes Sociales!</h4>
+                    <div class="contenedor-iconos-redes ">
+                        <a href="# "> <svg xmlns="http://www.w3.org/2000/svg " class="icon icon-tabler icon-tabler-brand-facebook " width="40 " height="40 " viewBox="0 0 24 24 " stroke-width="1.5 " stroke="#00abfb " fill="none " stroke-linecap="round
+                    " stroke-linejoin="round ">
+                        <path stroke="none " d="M0 0h24v24H0z " fill="none "/>
+                        <path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3 " />
+                    </svg></a>
+                        <a href="# "><svg xmlns="http://www.w3.org/2000/svg " class="icon icon-tabler icon-tabler-brand-instagram " width="40 " height="40 " viewBox="0 0 24 24 " stroke-width="1.5 " stroke="#fd0061 " fill="none " stroke-linecap="round
+                    " stroke-linejoin="round ">
+                        <path stroke="none " d="M0 0h24v24H0z " fill="none "/>
+                        <rect x="4 " y="4 " width="16 " height="16 " rx="4 " />
+                        <circle cx="12 " cy="12 " r="3 " />
+                        <line x1="16.5 " y1="7.5 " x2="16.5 " y2="7.501 " />
+                    </svg></a>
+                    </div>
+                </div>
+
+                <nav class="nav-footer ">
+                    <a href="../index.html " class="nav-link ">Inicio</a>
+                    <a href="# " class="nav-link ">Contacto</a>
+
+                </nav>
+
+            </div>
+
+        </footer>
+
+
+
+
+
+
+
+
+    </div>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js "></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11 "></script>
+    <script src="https://unpkg.com/vue@3 "></script>
+    <script src="./js/cards.js "></script>
+
+
+</body>
+
+</html>

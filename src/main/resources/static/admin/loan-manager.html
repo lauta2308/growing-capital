@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+    <title>Loan Manager - Growing Capital Homebanking</title>
+    <link rel="icon" type="image/x-icon" href="../web/imagenes/GrowingCapitalTransparent-logo.png">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+    <div id="app">
+
+
+        <header class="bg-oscuro">
+
+
+            <div class="top-bar contenedor">
+                <div class="contenedor-nav-menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" @Click="abrirMenu()" class="icon icon-tabler icon-tabler-menu-2" id="open-menu-icon" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <line x1="4" y1="6" x2="20" y2="6" />
+                    <line x1="4" y1="12" x2="20" y2="12" />
+                    <line x1="4" y1="18" x2="20" y2="18" />
+                </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" @Click="cerrarMenu()" class="icon icon-tabler icon-tabler-square-x" id="close-menu-icon" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <rect x="4" y="4" width="16" height="16" rx="2" />
+                    <path d="M10 10l4 4m0 -4l-4 4" />
+                </svg>
+
+                    <nav class="navegacion" id="navegacion">
+                        <a class="nav-link" href="./card-manager.html">Administrar tarjetas</a>
+                        <a class="nav-link" href="./account-manager.html">Administrar cuentas</a>
+                        <a class="nav-link" href="http://localhost:8080/h2-console">Panel</a>
+                        <a class="nav-link" id="nav-cerrar-sesion" @Click="aparecerLogout()">Cerrar Sesión</a>
+
+
+
+                    </nav>
+
+                </div>
+
+                <a href="./manager.html" class="contenedor-logo">
+                    <img src="../web/imagenes/GrowingCapitalTransparent-logo.png" alt="growing-capital-logo" class="logo">
+                </a>
+
+                <a>
+                    <svg xmlns="http://www.w3.org/2000/svg" id="icono-iniciar-sesion" @Click="aparecerLogout()" class="icon icon-tabler icon-tabler-user-circle" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <circle cx="12" cy="12" r="9" />
+                    <circle cx="12" cy="10" r="3" />
+                    <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
+                </svg>
+                </a>
+
+            </div>
+
+
+
+
+
+        </header>
+
+        <main class="bg-claro">
+            <section class="client-manager contenedor">
+
+
+                <form action="#" class="form-manager">
+
+                    <h2>Crear nuevo préstamo</h2>
+
+                    <p class="form-manager-error bgRed"></p>
+                    <label>Nombre del préstamo: 
+                            <input type="text" v-model="nombreNuevoPrestamo" placeholder="Nombre del préstamo" required>
+                        </label>
+                    <label>Monto máximo: 
+                            <input type="number" v-model="montoPrestamo" min="0" placeholder="Monto ej: 100000" required>
+                        </label>
+                    <label>Cantidad de pagos separados por coma:
+                        <input type="text" v-model="pagosPrestamo" placeholder="Cantidad de pagos ej: 6,12,24" required>
+                    </label>
+
+                    <label>Interés
+                        <input type="number" v-model="interesPrestamo" min="0" placeholder="ingresa el interés ej: 20" required>
+                    </label>
+
+                    <div class="contenedor-admin-btns ">
+                        <a @Click.prevent="solicitudCrearPrestamo()" class="btn-primario">Crear préstamo</a>
+                    </div>
+                </form>
+
+            </section>
+
+
+        </main>
+
+        <footer class="footer bg-oscuro">
+
+            <div class="contenedor-footer contenedor">
+                <a href="./manager.html" class="contenedor-logo">
+                    <img src="../web/imagenes/GrowingCapitalTransparent-logo.png" alt="growing-capital-logo" class="logo">
+                </a>
+
+                <div class="footer-contenedor-redes">
+                    <h4>Siguenos en nuestras Redes Sociales!</h4>
+                    <div class="contenedor-iconos-redes">
+                        <a href="#"> <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-facebook" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00abfb" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" />
+                    </svg></a>
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fd0061" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <rect x="4" y="4" width="16" height="16" rx="4" />
+                        <circle cx="12" cy="12" r="3" />
+                        <line x1="16.5" y1="7.5" x2="16.5" y2="7.501" />
+                    </svg></a>
+                    </div>
+                </div>
+
+                <nav class="nav-footer">
+                    <a href="./manager.html" class="nav-link">Inicio</a>
+
+
+                </nav>
+
+            </div>
+
+        </footer>
+
+
+
+
+    </div>
+
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./loan-manager.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio - Growing Capital Homebanking</title>
+    <link rel="icon" type="image/x-icon" href="./web/imagenes/GrowingCapitalTransparent-logo.png">
+    <link rel="stylesheet" href="./web/styles/wickedcss.min.css">
+    <link rel="stylesheet" href="./web/styles/styles.css">
+
+
+</head>
+
+<body>
+
+    <div id="app">
+
+        <header class="bg-oscuro">
+
+
+            <div class="top-bar contenedor">
+                <div class="contenedor-nav-menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" @Click="abrirMenu()" class="icon icon-tabler icon-tabler-menu-2" id="open-menu-icon" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <line x1="4" y1="6" x2="20" y2="6" />
+                    <line x1="4" y1="12" x2="20" y2="12" />
+                    <line x1="4" y1="18" x2="20" y2="18" />
+                </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" @Click="cerrarMenu()" class="icon icon-tabler icon-tabler-square-x" id="close-menu-icon" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <rect x="4" y="4" width="16" height="16" rx="2" />
+                    <path d="M10 10l4 4m0 -4l-4 4" />
+                </svg>
+                    <nav class="navegacion" id="navegacion">
+                        <a href="#" class="nav-link">Inicio</a>
+                        <a href="#beneficios" class="nav-link">Beneficios</a>
+                        <a href="#" class="nav-link">Contacto</a>
+                        <a class="nav-link login" id="nav-iniciar-sesion" @Click="aparecerFormularioRegistro()">Registro/ Iniciar Sesión</a>
+
+
+
+                    </nav>
+
+                </div>
+
+                <a href="./index.html" class="contenedor-logo">
+                    <img src="./web/imagenes/GrowingCapitalTransparent-logo.png" alt="growing-capital-logo" class="logo">
+                </a>
+
+                <a class="login">
+                    <svg @Click="aparecerFormularioRegistro()" xmlns="http://www.w3.org/2000/svg" id="icono-iniciar-sesion" class="icon icon-tabler icon-tabler-user-circle" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <circle cx="12" cy="12" r="9" />
+                <circle cx="12" cy="10" r="3" />
+                <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
+            </svg>
+
+                </a>
+
+
+            </div>
+
+            <div class="login-form-container contenedor">
+                <div class="contenedor-icono-cruz-form contenedor" @Click="ocultarForm()">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-x" id="close-form" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <rect x="4" y="4" width="16" height="16" rx="2" />
+                    <path d="M10 10l4 4m0 -4l-4 4" />
+                </svg>
+                </div>
+                <div class="contenedor-titulo-registro-form contenedor">
+                    <h2 class="form-title">Regístrate</h2>
+                    <p>¿Ya tienes una cuenta?, <a @Click="aparecerFormLogin()" class="switchFormBtn">Inicia Sesión</a> </p>
+
+                    <form action="" class="login-form contenedor bg-claro">
+                        <label>
+                            <input class="login-form-input" type="text" placeholder="Nombre" v-model="newUserName" required>
+                        </label>
+
+                        <label>
+                            <input class="login-form-input" type="text" placeholder="Apellido" v-model="newUserLastName" required>
+                        </label>
+
+                        <label>
+                        <input class="login-form-input" type="email" placeholder="Email" v-model="newUserEmail" required>
+                        </label>
+                        <label>
+                        <input class="login-form-input" type="password" placeholder="Contraseña" v-model="newUserPassword" required>
+                        </label>
+                        <p class="registro-correcto">Usuario creado correctamente</p>
+                        <p class="registro-incorrecto">Error de registro. Completa los datos correctamente</p>
+
+                        <label>
+                            <input type="submit"  @click.prevent="nuevoRegistro()" class="btn-primario login-btn" id="register-submit" value="Registrarme">
+                        </label>
+
+                    </form>
+                </div>
+                <div class="contenedor-titulo-iniciarSesion-form contenedor">
+                    <h2 class="form-title">Iniciar sesión</h2>
+                    <p>¿Aún no tienes cuenta?, <a @Click="aparecerFormularioRegistro()" class="switchFormBtn">Registrate</a> </p>
+                    <form action="" class="login-form contenedor bg-claro">
+
+
+                        <label>
+                        <input class="login-form-input" type="email" placeholder="Email" v-model="userEmail" required>
+                    </label>
+                        <label>
+                        <input class="login-form-input" type="password" placeholder="Contraseña" v-model="userPassword" required>
+                    </label>
+                        <p class="login-correcto">Login Correcto</p>
+                        <p class="login-incorrecto">Login incorrecto. Vuelve a intentar</p>
+
+                        <label>
+                            <input type="submit"  @click.prevent="validarDatos()" class="btn-primario login-btn" id="login-submit" value="Iniciar">
+                    </label>
+
+                    </form>
+                </div>
+
+
+            </div>
+
+
+
+            <div class="contenedor-hero-index contenedor">
+                <div class="contenido-hero-index">
+                    <h1 class="index-titulo">Un homebanking pensado para vos <br> <br><span class="hero-span">Lleva el control total de tus cuentas en todo momento</span> </h1>
+                    <img src="./web/imagenes/icono-viendo-pantalla.svg" alt="icono viendo pantalla" class="icono-hero">
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <main>
+
+            <section class="bg-claro">
+                <div class="container">
+                    <svg viewBox="0 0 500 500" preserveAspectRatio="xMinYMin meet" class="svg">
+                    <path d="M0,100 C150,200 350,0 500,100 L500,00 L0,0 Z" style="stroke: none; fill:#2f21ff"></path>
+                </svg>
+                </div>
+                <h2 id="beneficios">Beneficios</h2>
+                <div class="contenedor-beneficios contenedor">
+                    <div class="beneficio">
+                        <h3>Obtén descuentos</h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shopping-cart-discount img-beneficio" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <circle cx="6" cy="19" r="2" />
+                        <circle cx="17" cy="19" r="2" />
+                        <path d="M17 17h-11v-14h-2" />
+                        <path d="M20 6l-1 7h-13" />
+                        <path d="M10 10l6 -6" />
+                        <circle cx="10.5" cy="4.5" r=".5" />
+                        <circle cx="15.5" cy="9.5" r=".5" />
+                    </svg>
+                        <p class="descripcion-beneficio">Pide tu tarjeta y obtén descuentos exclusivos en empresas de todo el país</p>
+                    </div>
+
+                    <div class="beneficio">
+                        <h3>Atención personalizada</h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-mobile-message img-beneficio" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M11 3h10v8h-3l-4 2v-2h-3z" />
+                        <path d="M15 16v4a1 1 0 0 1 -1 1h-8a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1h2" />
+                        <path d="M10 18v.01" />
+                    </svg>
+                        <p class="descripcion-beneficio">Nuestros agentes están a tu disposición las 24 hs del día</p>
+                    </div>
+
+                    <div class="beneficio">
+                        <h3>Obtén tarjetas</h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-credit-card img-beneficio" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <rect x="3" y="5" width="18" height="14" rx="3" />
+                        <line x1="3" y1="10" x2="21" y2="10" />
+                        <line x1="7" y1="15" x2="7.01" y2="15" />
+                        <line x1="11" y1="15" x2="13" y2="15" />
+                    </svg>
+                        <p class="descripcion-beneficio">Adquiere tarjetas de crédito y débito para usar en cualquier parte del país</p>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <section class="bg-oscuro">
+                <div class="container">
+                    <svg viewBox="0 0 500 500" preserveAspectRatio="xMinYMin meet" class="svg">
+                    <path d="M0,100 C150,200 350,0 500,100 L500,00 L0,0 Z" style="stroke: none; fill:#00008e;"></path>
+                </svg>
+                </div>
+                <h2>Por qué elegirnos</h2>
+                <div class="contenedor-beneficios contenedor">
+                    <div class="beneficio">
+                        <h3>Innovador</h3>
+                        <img src="./web/imagenes/innovation-icon.png" alt="imagen de innovacion" class="icono-beneficio pulse">
+                        <p class="descripcion-beneficio">Una novedosa e integral experiencia, que suma nuevas funcionalidades de alto valor para vos.</p>
+                    </div>
+
+                    <div class="beneficio">
+                        <h3>Simple</h3>
+                        <img src="./web/imagenes/simple-icon.png" alt="imagen icono simple" class="icono-beneficio pulse">
+                        <p class="descripcion-beneficio">Con una navegación centralizada y fácil de entender, en muy poco tiempo vas a sentir que lo usás desde siempre.</p>
+                    </div>
+
+                    <div class="beneficio">
+                        <h3>Cercano</h3>
+                        <img src="./web/imagenes/cercano-icon.png" alt="imagen icono cercano" class="icono-beneficio pulse">
+                        <p class="descripcion-beneficio">Accede a tu cuenta desde cualquier dispositivo con nuestro desarrollo multiplataforma</p>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section class="bg-claro">
+                <div class="container">
+                    <svg viewBox="0 0 500 500" preserveAspectRatio="xMinYMin meet" class="svg">
+                    <path d="M0,100 C150,200 350,0 500,100 L500,00 L0,0 Z" style="stroke: none; fill:#2f21ff"></path>
+                </svg>
+                </div>
+                <h2>Lo que puedes hacer</h2>
+                <div class="contenedor-beneficios contenedor">
+                    <div class="beneficio">
+                        <h3>Crear Cuentas</h3>
+                        <img src="./web/imagenes/Mobile-login-pana.png" alt="imagen de innovacion" class="icono-beneficio wow wiggle">
+                        <br>
+                        <a href="https://storyset.com/phone" class="attribution-text">Phone illustrations by Storyset</a>
+                        <p class="descripcion-beneficio">Crea y agrega múltiples cuentas para llevar el control desde un mismo lugar</p>
+
+                    </div>
+
+                    <div class="beneficio">
+                        <h3>Realizar Transferencias</h3>
+                        <img src="./web/imagenes/send-money.png" alt="imagen enviar dinero" class="icono-beneficio wow wiggle">
+                        <p class="descripcion-beneficio">Envía y recibe dinero al instante </p>
+                    </div>
+
+                    <div class="beneficio">
+                        <h3>Solicitar Préstamos</h3>
+                        <img src="./web/imagenes/loan-icon.png" alt="imagen prestamo" class="icono-beneficio wow wiggle">
+                        <p class="descripcion-beneficio">Elige fácilmente entre 3 opciones de préstamos disponibles y saca tus proyectos adelante</p>
+                    </div>
+
+                </div>
+            </section>
+
+
+
+
+        </main>
+
+        <footer class="footer bg-oscuro">
+
+            <div class="contenedor-footer contenedor">
+                <a href="#" class="contenedor-logo">
+                    <img src="./web/imagenes/GrowingCapitalTransparent-logo.png" alt="growing-capital-logo" class="logo">
+                </a>
+
+                <div class="footer-contenedor-redes">
+                    <h4>Siguenos en nuestras Redes Sociales!</h4>
+                    <div class="contenedor-iconos-redes">
+                        <a href="#"> <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-facebook" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00abfb" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" />
+                    </svg></a>
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fd0061" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <rect x="4" y="4" width="16" height="16" rx="4" />
+                        <circle cx="12" cy="12" r="3" />
+                        <line x1="16.5" y1="7.5" x2="16.5" y2="7.501" />
+                    </svg></a>
+                    </div>
+                </div>
+
+                <nav class="nav-footer">
+                    <a href="#" class="nav-link">Inicio</a>
+                    <a href="#beneficios" class="nav-link">Beneficios</a>
+                    <a href="#" class="nav-link">Contacto</a>
+
+                </nav>
+
+            </div>
+
+        </footer>
+
+    </div>
+
+
+
+
+
+
+    </div>
+
+
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./web/js/main.js"></script>
+
+</body>
+
+</html>

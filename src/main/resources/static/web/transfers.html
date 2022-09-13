@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realziar Transferencia</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geostar+Fill&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="./imagenes/GrowingCapitalTransparent-logo.png">
+    <link rel="stylesheet" href="./styles/styles.css">
+</head>
+
+<body>
+
+    <div id="app">
+        <header class="bg-oscuro">
+
+
+            <div class="top-bar contenedor">
+                <div class="contenedor-nav-menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" @Click="abrirMenu()" class="icon icon-tabler icon-tabler-menu-2" id="open-menu-icon" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <line x1="4" y1="6" x2="20" y2="6" />
+                    <line x1="4" y1="12" x2="20" y2="12" />
+                    <line x1="4" y1="18" x2="20" y2="18" />
+                </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" @Click="cerrarMenu()" class="icon icon-tabler icon-tabler-square-x" id="close-menu-icon" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <rect x="4" y="4" width="16" height="16" rx="2" />
+                    <path d="M10 10l4 4m0 -4l-4 4" />
+                </svg>
+                    <nav class="navegacion" id="navegacion">
+                        <a href="../index.html" class="nav-link">Inicio</a>
+                        <a href="./cards.html" class="nav-link">Tarjetas</a>
+                        <a href="./posnet-payment.html" class="nav-link">Posnet</a>
+                        <a href="#" class="nav-link">Contacto</a>
+                        <a class="nav-link" id="nav-cerrar-sesion" @Click="aparecerLogout()">Cerrar Sesión</a>
+
+                    </nav>
+
+                </div>
+
+                <a href="../index.html" class="contenedor-logo">
+                    <img src="./imagenes/GrowingCapitalTransparent-logo.png" alt="growing-capital-logo" class="logo">
+                </a>
+
+                <a>
+                    <svg xmlns="http://www.w3.org/2000/svg" id="icono-iniciar-sesion" @Click="aparecerLogout()" class="icon icon-tabler icon-tabler-user-circle" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <circle cx="12" cy="12" r="9" />
+                    <circle cx="12" cy="10" r="3" />
+                    <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
+                </svg>
+                </a>
+
+            </div>
+
+
+
+
+        </header>
+
+        <main class="contenedor">
+
+
+            <form class="transfer-form">
+                <h1>Realizar Transferencia</h1>
+                <div class="mensajes-transferencia">
+                    <p class="transferencia-correcta">Transferencia realizada con éxito</p>
+                    <p class="transferencia-incorrecta">No se pudo realizar la transferencia. Vuelve a intentar</p>
+                </div>
+
+                <label>Selecciona la cuenta desde donde vas a transferir
+                <select @Change="cuentaOrigenSeleccionada($event)" v-model="cuentaOrigen" required>
+                    <option v-for="cuenta in cuentasCliente" :value="cuenta.number">{{cuenta.number}}</option>
+                </select>
+                </label>
+
+
+
+                <p>Saldo Disponible para transferir: $ {{cuentaOrigenSaldo}}</p>
+                <label>¿Hacia dónde quieres transferir? Selecciona:
+                <select v-model="destinoTransferencia" required>
+                    <option value="cuentaPropia">Cuenta Propia</option>
+                    <option value="cuentaDeTercero">Cuenta De Tercero</option>
+                </select>
+
+                </label>
+
+                <label v-if="destinoTransferencia === 'cuentaPropia'">Selecciona la cuenta de destino
+                <select v-model="cuentaDestinoPropiaSeleccionada" required>
+                    <option v-for="cuenta in cuentaDestinoPropia" :value="cuenta.number">{{cuenta.number}}</option>
+                </select>
+                </label>
+
+                <label v-else>Escribe el número de cuenta del destinatario
+                <input type="text" v-model="cuentaDestinoAjena" placeholder="VIN-XXXXXXXXX" required>
+                </label>
+
+                <label>Monto a Transferir
+                $<input type="number" v-model="montoATransferir" min="100" :max="cuentaOrigenSaldo" required>
+                </label>
+
+                <label>Agrega una Descripción:
+                <textarea v-model="descripcionTransferencia" placeholder="Agrega una descripción" required></textarea>
+                </label>
+
+                <div class="btn-primario-contenedor ">
+                    <input class="btn-primario" type="submit" @Click.prevent="realizarTransferencia()" value="Realizar Transferencia">
+                </div>
+
+
+
+            </form>
+
+
+
+
+        </main>
+
+        <footer class="footer bg-oscuro">
+
+            <div class="contenedor-footer contenedor">
+                <a href="#" class="contenedor-logo">
+                    <img src="./imagenes/GrowingCapitalTransparent-logo.png" alt="growing-capital-logo" class="logo">
+                </a>
+
+
+                <div class="footer-contenedor-redes">
+                    <h4>Siguenos en nuestras Redes Sociales!</h4>
+                    <div class="contenedor-iconos-redes">
+                        <a href="#"> <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-facebook" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00abfb" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" />
+                    </svg></a>
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fd0061" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <rect x="4" y="4" width="16" height="16" rx="4" />
+                        <circle cx="12" cy="12" r="3" />
+                        <line x1="16.5" y1="7.5" x2="16.5" y2="7.501" />
+                    </svg></a>
+                    </div>
+                </div>
+
+                <nav class="nav-footer">
+                    <a href="../index.html" class="nav-link">Inicio</a>
+                    <a href="#" class="nav-link">Contacto</a>
+
+                </nav>
+
+            </div>
+
+        </footer>
+
+
+
+
+    </div>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="./js/transfers.js"></script>
+
+</body>
+
+</html>
