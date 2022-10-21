@@ -1,10 +1,6 @@
 package mindhub.homebanking.models;
 
-import mindhub.homebanking.repositories.ClientRepository;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.context.annotation.Bean;
 
 import javax.persistence.*;
 import java.util.HashSet;

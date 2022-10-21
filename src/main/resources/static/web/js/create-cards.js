@@ -102,7 +102,7 @@ createApp({
 
         },
         cerrarSesion: function() {
-            axios.post('/api/logout').then(response => window.location.href = "./index.html")
+            axios.post('/api/logout').then(response => window.location.href = "../index.html")
         },
         accountDateFormat: function(date) {
             anioFecha = new Date(date).getFullYear();

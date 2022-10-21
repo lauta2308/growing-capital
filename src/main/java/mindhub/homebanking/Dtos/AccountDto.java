@@ -1,10 +1,9 @@
 package mindhub.homebanking.Dtos;
 
-import mindhub.homebanking.models.*;
+import mindhub.homebanking.models.Account;
+import mindhub.homebanking.models.AccountStatus;
+import mindhub.homebanking.models.AccountType;
 
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;

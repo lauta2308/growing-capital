@@ -1,10 +1,10 @@
 package mindhub.homebanking.Dtos;
 
-import mindhub.homebanking.models.*;
+import mindhub.homebanking.models.Card;
+import mindhub.homebanking.models.CardColor;
+import mindhub.homebanking.models.CardStatus;
+import mindhub.homebanking.models.CardType;
 
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.time.LocalDate;
 
 public class CardDto {

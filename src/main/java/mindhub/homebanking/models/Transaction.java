@@ -1,7 +1,6 @@
 package mindhub.homebanking.models;
 
 
-import org.apache.tomcat.jni.Local;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;

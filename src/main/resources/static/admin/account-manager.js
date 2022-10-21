@@ -127,7 +127,7 @@ createApp({
 
                 }).then(Swal.fire(
                     'Excelente!',
-                    'Tarjeta eliminada con éxito',
+                    'Cuenta eliminada con éxito',
                     'success'
                 ))
                 .then(
