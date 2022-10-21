@@ -2,7 +2,9 @@ package mindhub.homebanking.Dtos;
 
 import mindhub.homebanking.models.Loan;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class LoanDto {
     private long id;

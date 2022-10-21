@@ -1,6 +1,9 @@
 package mindhub.homebanking.Dtos;
 
 
+import mindhub.homebanking.models.Account;
+import mindhub.homebanking.models.Loan;
+
 public class LoanApplicationDto {
 
     private long loan;

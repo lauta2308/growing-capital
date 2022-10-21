@@ -110,26 +110,22 @@ createApp({
             } else if (this.interesPrestamo <= 0) {
                 mensajeErrorForm.textContent = "El interés no puede ser 0";
                 mensajeErrorForm.style.display = "block";
-            } else {
-                this.agregarNuevoPrestamo();
             }
 
-
+            this.agregarNuevoPrestamo();
 
         },
 
         agregarNuevoPrestamo: function() {
-            axios.post("/admin/newloan", `name=${this.nombreNuevoPrestamo}&maxAmmount=${this.montoPrestamo}&payments=${this.pagosPrestamo}&fee=${this.interesPrestamo}`)
+            axios.post("/admin/newloan", `name=${this.nombreNuevoPrestamo}&maxAmmount=${this.montoPrestamo}&payments=${this.pagosPrestamo}&fee=${this.interesPrestamo}`, {
+                    headers: { 'content-type': 'application/x-www-form-urlencoded' }
+                })
                 .then(Swal.fire(
                     'Excelente!',
                     'Se ha creado un nuevo préstamo.',
                     'success'
                 ))
-
-            .then(setTimeout(function() {
-                window.location.href = "./manager.html"
-            }, 1500))
-
+                .then(window.location.href = "../admin/manager.html")
 
             .catch(error => console.log(error))
         }

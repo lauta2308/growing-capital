@@ -2,12 +2,22 @@ package mindhub.homebanking.controllers;
 
 
 import mindhub.homebanking.Dtos.ClientDto;
-import mindhub.homebanking.services.ClientService;
+import mindhub.homebanking.Dtos.ClientLoanDto;
+import mindhub.homebanking.models.*;
+import mindhub.homebanking.repositories.AccountRepository;
+import mindhub.homebanking.repositories.CardRepository;
+import mindhub.homebanking.repositories.ClientLoanRepository;
+import mindhub.homebanking.repositories.ClientRepository;
+import mindhub.homebanking.utils.CardUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,31 +25,39 @@ import java.util.stream.Collectors;
 @RestController
 public class ClientController {
 
+    @Autowired
+    ClientRepository clientRepository;
 
     @Autowired
-    ClientService clientService;
-
-
+    ClientLoanRepository clientLoanRepository;
 
     @GetMapping("/api/clients")
     public List<ClientDto> getClients(){
 
-        return clientService.getClients().stream().map(client -> new ClientDto(client)).collect(Collectors.toList());
+        return clientRepository.findAll().stream().map(client -> new ClientDto(client)).collect(Collectors.toList());
     }
 
 
 
     @GetMapping("/api/clients/{id}")
-    public ClientDto getClient(@PathVariable Long id){
+    public ClientDto getClients(@PathVariable Long id){
 
 
-            return clientService.getClient(id);
+            return clientRepository.findById(id).map(client -> new ClientDto(client)).orElse(null);
 
 
 
     }
 
 
+
+    @Autowired
+    AccountRepository accountRepository;
+
+    @Autowired
+    CardRepository cardRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @PostMapping("/api/clients")
 
@@ -50,18 +68,65 @@ public class ClientController {
             @RequestParam String email, @RequestParam String password) {
 
 
-        return clientService.register(name, lastName, email, password);
+        if (name.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {
+
+            return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
+
+        }
 
 
+        if (clientRepository.findByEmail(email) != null) {
+
+            return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
+
+        }
+
+        Client nuevoCliente = new Client(name, lastName, email, passwordEncoder.encode(password));
+        clientRepository.save(nuevoCliente);
+
+            String cardNumber = "";
+            long cardCvv = CardUtils.getCvv();
+
+            do{
+                cardNumber = CardUtils.getCardNumber();
+            } while(cardRepository.findByNumber(cardNumber) != null);
+
+
+            Card nuevaTarjeta = new Card(CardType.DEBITO , CardColor.SILVER, cardNumber, cardCvv, LocalDate.now(), LocalDate.now().plusYears(5), nuevoCliente, name + lastName, CardStatus.ACTIVE);
+
+            cardRepository.save(nuevaTarjeta);
+
+
+            String numeroAleatorio = "";
+            Account verificarNumero;
+
+                do{
+                    numeroAleatorio = "VIN-" + Math.round(10000000 + Math.random() * 90000000);
+                    verificarNumero = accountRepository.findByNumber(numeroAleatorio);
+
+                }while(
+                        verificarNumero != null
+
+                );
+
+
+            Account cuentaSinRepetir = new Account(numeroAleatorio, AccountType.CORRIENTE, LocalDateTime.now(), 0,nuevoCliente, nuevaTarjeta, AccountStatus.ACTIVE);
+
+            accountRepository.save(cuentaSinRepetir);
+
+
+
+
+
+            return new ResponseEntity<>("Usuario creado con éxito",HttpStatus.CREATED);
         }
 
 
         @GetMapping("/api/clients/current")
 
-        public ClientDto getCurrentClient (Authentication authentication){
+        public ClientDto getClient (Authentication authentication){
 
-            return clientService.getCurrentClient(authentication);
-
+            return new ClientDto(clientRepository.findByEmail(authentication.getName()));
 
         }
 

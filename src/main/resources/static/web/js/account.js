@@ -146,16 +146,11 @@ createApp({
                     scale: scale,
                 },
                 callback: function(doc) {
-                    //doc.output("dataurlnewwindow", { filename: "reporte-transacciones.pdf" });
-                    doc.save('test.pdf')
+                    doc.output("dataurlnewwindow", { filename: "reporte de transacciones.pdf" });
                 }
             })
 
-        },
-
-
-
-
+        }
 
 
 
