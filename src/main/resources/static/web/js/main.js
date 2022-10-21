@@ -80,7 +80,7 @@ createApp({
             if (!this.newUserEmail.includes("@")) {
                 registroIncorrectoMsg.style.display = "block"
             } else {
-                axios.post('/api/clients', `name=${this.newUserName}&lastName=${this.newUserLastName}&email=${this.newUserEmail}&password=${this.newUserPassword}`, { headers: { 'content-type': 'application/x-www-form-urlencoded' } })
+                axios.post('/api/clients', `name=${this.newUserName}&lastName=${this.newUserLastName}&email=${this.newUserEmail}&password=${this.newUserPassword}`)
                     .then(response => {
                         registroCorrectoMsg.style.display = "block"
                         this.validarRegistro(this.newUserEmail, this.newUserPassword)
@@ -114,7 +114,7 @@ createApp({
             loginCorrectoMsg.style.display = "none"
             loginIncorrectoMsg.style.display = "none"
 
-            axios.post('/api/login', `email=${email}&password=${password}`, { headers: { 'content-type': 'application/x-www-form-urlencoded' } })
+            axios.post('/api/login', `email=${email}&password=${password}`)
                 .then(response => {
                     registroCorrectoMsg.style.display = "none"
                     loginCorrectoMsg.style.display = "block"
@@ -150,7 +150,7 @@ createApp({
 
             loginCorrectoMsg.style.display = "none"
             loginIncorrectoMsg.style.display = "none"
-            axios.post('/api/login', `email=${this.userEmail}&password=${this.userPassword}`, { headers: { 'content-type': 'application/x-www-form-urlencoded' } })
+            axios.post('/api/login', `email=${this.userEmail}&password=${this.userPassword}`)
                 .then(response => {
 
 

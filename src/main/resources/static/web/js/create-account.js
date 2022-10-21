@@ -160,9 +160,7 @@ createApp({
         agregarCuenta() {
 
 
-            axios.post("/api/clients/current/accounts", `accountType=${this.tipoCuentaSeleccionada}&cardColor=${this.colorTarjetaSeleccionada}`, {
-                    headers: { 'content-type': 'application/x-www-form-urlencoded' }
-                })
+            axios.post("/api/clients/current/accounts", `accountType=${this.tipoCuentaSeleccionada}&cardColor=${this.colorTarjetaSeleccionada}`)
                 .then(Swal.fire(
                     'Excelente!',
                     'Se te agregó una nueva cuenta..',
