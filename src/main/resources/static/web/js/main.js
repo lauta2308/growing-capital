@@ -22,6 +22,8 @@ createApp({
     },
     methods: {
 
+
+
         abrirMenu: function() {
             let iconoAbrirMenu = document.getElementById("open-menu-icon");
             let iconoCerrarMenu = document.getElementById("close-menu-icon");
@@ -112,7 +114,7 @@ createApp({
             loginCorrectoMsg.style.display = "none"
             loginIncorrectoMsg.style.display = "none"
 
-            axios.post('/api/login', `email=${email}&password=${password}`)
+            axios.post('/api/login', `email=${email}&password=${password}`, { headers: { 'content-type': 'application/x-www-form-urlencoded' } })
                 .then(response => {
                     registroCorrectoMsg.style.display = "none"
                     loginCorrectoMsg.style.display = "block"
@@ -148,7 +150,7 @@ createApp({
 
             loginCorrectoMsg.style.display = "none"
             loginIncorrectoMsg.style.display = "none"
-            axios.post('/api/login', `email=${this.userEmail}&password=${this.userPassword}`)
+            axios.post('/api/login', `email=${this.userEmail}&password=${this.userPassword}`, { headers: { 'content-type': 'application/x-www-form-urlencoded' } })
                 .then(response => {
 
 

@@ -141,7 +141,7 @@ createApp({
                     if (result.isConfirmed) {
 
 
-                        axios.post('/api/transactions', `sender=${sender}&receiver=${receiver}&ammount=${ammount}&description=${description}`)
+                        axios.post('/api/transactions', `sender=${sender}&receiver=${receiver}&ammount=${ammount}&description=${description}`, { headers: { 'content-type': 'application/x-www-form-urlencoded' } })
                             .then(Swal.fire(
                                 'Excelente!',
                                 'Transferencia realizada con éxito',

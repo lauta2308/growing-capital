@@ -1,11 +1,7 @@
 package mindhub.homebanking.Dtos;
 
-import mindhub.homebanking.models.Account;
 import mindhub.homebanking.models.Client;
 
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
