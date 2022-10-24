@@ -10,7 +10,8 @@ createApp({
             cantidadTarjetasDebitoSilver: 0,
             cantidadTarjetasDebitoTitanium: 0,
             tipoCuentaSeleccionada: "",
-            colorTarjetaSeleccionada: ""
+            colorTarjetaSeleccionada: "",
+            puedeCrearCuenta: "",
 
 
 
@@ -23,7 +24,7 @@ createApp({
     },
     created() {
         this.loadClientAccounts();
-        this.loadClientCards();
+
 
 
     },
@@ -33,6 +34,12 @@ createApp({
             await axios.get("/api/clients/current/accounts").then(response => {
 
                 this.accounts = response.data.filter(account => account.status === "ACTIVE");
+
+                if (this.accounts.length >= 3) {
+                    this.puedeCrearCuenta = false;
+                } else {
+                    this.loadClientCards();
+                }
 
 
 

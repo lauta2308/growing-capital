@@ -66,8 +66,11 @@
 
         <main class="contenedor">
 
+            <form v-if="puedeCrearCuenta === false" class="form-crear-cuenta">
+                <h1>Alcanzaste el límite de cuentas</h1>
+            </form>
 
-            <form class="form-crear-cuenta">
+            <form v-else class="form-crear-cuenta">
                 <h1>Crea una nueva cuenta</h1>
                 <p class="create-account-error">Completa los campos para poder crear tu cuenta</p>
                 <label class="form-crear-cuenta__label">Elige el tipo de cuenta

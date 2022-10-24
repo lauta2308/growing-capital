@@ -63,7 +63,10 @@
         <main class="bg-claro contenedor">
 
 
-            <form class="form-crear-prestamo">
+            <form v-if="formularioHabilitado === false" class="form-crear-prestamo">
+                <h1>Ya alcanzaste el límite de préstamos</h1>
+            </form>
+            <form v-else class="form-crear-prestamo">
                 <h1>Solicitar Préstamo</h1>
                 <p class="create-loan-error">Completa los campos correctamente para poder solicitar el préstamo</p>
                 <label class="form-crear-loan__label">Elige el tipo de préstamo

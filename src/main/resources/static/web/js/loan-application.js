@@ -17,6 +17,7 @@ createApp({
             cuentaDestino: "",
             feePrestamo: "",
             montoDeCuota: "",
+            formularioHabilitado: "",
 
 
 
@@ -52,7 +53,15 @@ createApp({
 
                 this.dataLoans = response.data;
 
-                this.verifyUserInfo();
+                if (this.userLoans.length < this.dataLoans.length) {
+                    this.formularioHabilitado = true;
+                    this.verifyUserInfo();
+                } else {
+                    this.formularioHabilitado = false;
+
+                }
+
+
 
             })
 

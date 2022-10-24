@@ -64,9 +64,11 @@
         </header>
 
         <main class="contenedor">
+            <div v-if="formularioHabilitado === false" class="create-card">
+                <h1>Alcanzaste el límite de tarjetas de crédito</h1>
+            </div>
 
-
-            <div class="create-card">
+            <div v-else class="create-card">
                 <h1>Crea una nueva tarjeta de crédito</h1>
 
                 <div class="form-card-container">

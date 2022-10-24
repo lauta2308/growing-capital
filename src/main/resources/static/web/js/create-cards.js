@@ -14,6 +14,7 @@ createApp({
             cantidadTarjetasCreditoTitanium: 0,
             tipoTarjetaSeleccionada: "",
             colorTarjetaSeleccionada: "",
+            formularioHabilitado: "",
 
 
 
@@ -30,21 +31,30 @@ createApp({
                 this.data = response.data;
                 this.cards = this.data.cards;
 
+                this.cantidadCredito = this.cards.filter(card => card.type === "CREDITO" && card.status === "ACTIVE");
 
-                for (let i = 0; i < this.cards.length; i++) {
-                    if (this.cards[i].type === "CREDITO" && this.cards[i].status === "ACTIVE") {
-                        this.cantidadTarjetasCredito = this.cantidadTarjetasCredito + 1
-                        if (this.cards[i].color === "GOLD") {
-                            this.cantidadTarjetasCreditoGold = this.cantidadTarjetasCreditoGold + 1
-                        } else if (this.cards[i].color === "SILVER") {
-                            this.cantidadTarjetasCreditoSilver = this.cantidadTarjetasCreditoSilver + 1
-                        } else {
-                            this.cantidadTarjetasCreditoTitanium = this.cantidadTarjetasCreditoTitanium + 1
+                if (this.cantidadCredito.length < 3) {
+                    this.formularioHabilitado === true;
+                    for (let i = 0; i < this.cards.length; i++) {
+                        if (this.cards[i].type === "CREDITO" && this.cards[i].status === "ACTIVE") {
+                            this.cantidadTarjetasCredito = this.cantidadTarjetasCredito + 1
+                            if (this.cards[i].color === "GOLD") {
+                                this.cantidadTarjetasCreditoGold = this.cantidadTarjetasCreditoGold + 1
+                            } else if (this.cards[i].color === "SILVER") {
+                                this.cantidadTarjetasCreditoSilver = this.cantidadTarjetasCreditoSilver + 1
+                            } else {
+                                this.cantidadTarjetasCreditoTitanium = this.cantidadTarjetasCreditoTitanium + 1
 
+                            }
                         }
-                    }
 
+                    }
+                } else {
+                    this.formularioHabilitado = false;
                 }
+
+
+
 
 
             })
