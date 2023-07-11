@@ -111,29 +111,7 @@ createApp({
             return anioFecha + " - " + mesFecha + " - " + diaFecha + " | " + horaFecha + " : " + minutosFecha;
 
         },
-        checkDates: function() {
-
-            let fechaUno = new Date(this.firstDate);
-            let fechaDos = new Date(this.lastDate);
-
-
-
-
-
-
-
-            this.transaccionesFiltradas = [];
-            for (let i = 0; i < this.transacciones.length; i++) {
-
-                let fechaTransaccion = new Date(this.transacciones[i].date);
-                if (fechaTransaccion > fechaUno && fechaTransaccion < fechaDos) {
-
-                    this.transaccionesFiltradas.push(this.transacciones[i]);
-                }
-
-            }
-
-        },
+       
         descargarReporte: function() {
 
             var doc = new jsPDF('p', 'pt', 'letter');
@@ -155,11 +133,56 @@ createApp({
 
 
 
+        filtrarTransaccionesBack: function(){
+
+            console.log(typeof(this.idCuenta))
+            console.log(typeof(this.firstDate));
+            console.log(this.lastDate);
+            console.log(this.idCuenta);
+           
+            console.log(typeof(accountId));
+            axios.get('/api/transactions/filter', 
+            {
+
+            params: 
+            {
+                "id": this.idCuenta,
+                "initialDate": this.firstDate,
+                "finalDate": this.lastDate
+
+            }
+        }
+            ).then(response => {
+                this.transaccionesFiltradas = response.data
+                console.log(this.transaccionesFiltradas);
+                console.log(typeof(this.transaccionesFiltradas[0].id));
+            }
+                
+                
+            )
+
+       
+  
+        
+        
+        } ,
+
+        descargarPdf: function(){
+
+            axios.post('/api/transactions/pdf', this.transaccionesFiltradas)
+            .then(response => {
+              // Manejar la respuesta del servidor
+            })
+            .catch(error => {
+              // Manejar el error
+            });
 
 
 
 
     },
+
+},
 
     computed: {
 

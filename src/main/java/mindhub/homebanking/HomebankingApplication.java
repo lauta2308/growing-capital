@@ -14,9 +14,6 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import static java.lang.Integer.parseInt;
-import static mindhub.homebanking.models.CardColor.GOLD;
-import static mindhub.homebanking.models.CardColor.TITANIUM;
-import static mindhub.homebanking.models.CardType.DEBITO;
 
 @SpringBootApplication
 public class HomebankingApplication {

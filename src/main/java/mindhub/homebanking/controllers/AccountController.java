@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @RestController
 public class AccountController {
     @Autowired
-    AccountService accountService;
+    private AccountService accountService;
 
 
 
@@ -83,12 +83,9 @@ public class AccountController {
         return accountService.deleteAccount(accountDto, authentication);
 
 
-
-
-
-
-
     }
+
+
 
 
 

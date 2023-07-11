@@ -126,7 +126,7 @@
                             </div>
 
                             <div class="btn-primario-contenedor">
-                                <a type="submit" @Click.prevent="checkDates()" class="btn-primario">Chequear</a>
+                                <a type="submit" @Click.prevent="filtrarTransaccionesBack()" class="btn-primario">Chequear</a>
                             </div>
 
                         </div>
@@ -181,7 +181,7 @@
                     <p v-else>No se efectuaron transacciones en este período</p>
 
                     <div v-if="transaccionesFiltradas.length > 0" class="btn-primario-contenedor">
-                        <a @Click.prevent="descargarReporte()" class="btn-primario">Descargar</a>
+                        <a @Click.prevent="descargarPdf()" class="btn-primario">Descargar</a>
                     </div>
 
 

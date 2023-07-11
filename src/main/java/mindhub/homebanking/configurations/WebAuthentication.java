@@ -38,7 +38,7 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
 
             if (client != null) {
 
-                if(client.getname().contains("admin")){
+                if(client.getEmail().contains("admin")){
 
                     return new User(client.getEmail(), client.getPassword(),
                     AuthorityUtils.createAuthorityList("ADMIN"));

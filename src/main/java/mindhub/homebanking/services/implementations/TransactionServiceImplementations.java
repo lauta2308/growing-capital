@@ -1,20 +1,30 @@
 package mindhub.homebanking.services.implementations;
 
-import mindhub.homebanking.Dtos.PosnetPaymentDto;
+import com.sun.istack.NotNull;
+import mindhub.homebanking.Dtos.*;
 import mindhub.homebanking.models.*;
 import mindhub.homebanking.repositories.AccountRepository;
 import mindhub.homebanking.repositories.CardRepository;
 import mindhub.homebanking.repositories.ClientRepository;
 import mindhub.homebanking.repositories.TransactionRepository;
+import mindhub.homebanking.services.ClientService;
 import mindhub.homebanking.services.TransactionService;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -33,6 +43,9 @@ public class TransactionServiceImplementations implements TransactionService {
 
     @Autowired
     CardRepository cardRepository;
+
+    @Autowired
+    ClientService clientService;
 
     @Override
     public ResponseEntity<Object> makeTransaction(Double ammount, String description, String sender, String receiver, Authentication authentication) {
@@ -179,4 +192,44 @@ public class TransactionServiceImplementations implements TransactionService {
         }
 
     }
+
+    @Override
+    public Set<TransactionDTO> filterTransactions(Authentication authentication, TransactionFilterDto transactionFilterDto) {
+        // Convierto los string de fecha a localedate
+
+        String firstDate = transactionFilterDto.getInitialDate() + " " + "00:00:00";
+        String lastDate = transactionFilterDto.getFinalDate() + " " + "00:00:00";
+
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        LocalDateTime initialLocaleDate = LocalDateTime.parse(firstDate, formatter);
+        LocalDateTime finallLocaleDate = LocalDateTime.parse(lastDate, formatter);
+
+        // Busco al cliente autenticado
+        ClientDto clientDto = clientService.getCurrentClient(authentication);
+
+
+        long accountId = Long.valueOf(transactionFilterDto.getId());
+        // Busco la lista de cuentas que coincidan con la id de la cuenta recibida por parámetro
+        List<AccountDto> accountDtoList = clientDto.getAccount().stream().filter(accountDto1 ->  accountDto1.getId() == accountId).collect(Collectors.toList());
+
+        // Asigno la cuenta encontrada a una variable (sin la lista)
+
+        AccountDto accountDto = accountDtoList.get(0);
+
+
+        // Creo un set de transacciones  y filtro las transacciones por fecha
+
+        Set<TransactionDTO> transactionDTOSet = accountDto.getTransactions().stream().filter(transactionDTO ->
+                        transactionDTO.getDate().isEqual(initialLocaleDate) || transactionDTO.getDate().isAfter(initialLocaleDate))
+                .filter(transactionDTO -> transactionDTO.getDate().isEqual(finallLocaleDate) || transactionDTO.getDate().isBefore(finallLocaleDate))
+                .collect(Collectors.toSet());
+
+
+
+        return transactionDTOSet;
+    }
+
+
 }

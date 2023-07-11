@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 public class TransactionDTO {
 
-    private Long Id;
+    private Long id;
 
     private Double ammount;
 
@@ -23,7 +23,8 @@ public class TransactionDTO {
     }
 
     public TransactionDTO(Transaction transaction) {
-        this.Id = transaction.getId();
+
+        this.id = transaction.getId();
         this.ammount = transaction.getAmmount();
         this.description = transaction.getDescription();
         this.date = transaction.getDate();
@@ -32,7 +33,7 @@ public class TransactionDTO {
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public Double getAmmount() {
@@ -53,5 +54,10 @@ public class TransactionDTO {
 
     public double getBalanceLeft() {
         return balanceLeft;
+    }
+
+    public String toString(){
+        return "La id es: " + getId() + " la descripción es: " + getDescription() + " el monto es " + getAmmount() + " la fecha es " + getDate() + " el tipo es " + getType() + " el balance left es " + getBalanceLeft();
+
     }
 }
